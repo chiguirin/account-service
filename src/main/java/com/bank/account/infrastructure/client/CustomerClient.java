@@ -25,7 +25,7 @@ public class CustomerClient {
             log.info("Calling customer-service to validate customer {}", customerId);
 
             return restTemplate.getForObject(
-                    "http://customer-service:8080/clientes/{id}",
+                    "https://customer-service-production-b93a.up.railway.app/clientes/{id}",
                     CustomerStatusDTO.class,
                     customerId
             );
