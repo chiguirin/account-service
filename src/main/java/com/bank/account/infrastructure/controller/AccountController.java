@@ -6,10 +6,12 @@ import com.bank.account.domain.model.AccountType;
 import com.bank.account.infrastructure.controller.dto.AccountResponseDTO;
 import com.bank.account.infrastructure.controller.dto.CreateAccountRequestDTO;
 import com.bank.account.infrastructure.controller.dto.UpdateAccountStatusRequestDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Accounts", description = "Account operations")
 @RestController
 @RequestMapping("/cuentas")
 public class AccountController {

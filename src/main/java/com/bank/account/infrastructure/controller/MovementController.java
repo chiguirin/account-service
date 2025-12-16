@@ -3,11 +3,13 @@ package com.bank.account.infrastructure.controller;
 
 import com.bank.account.application.service.AccountService;
 import com.bank.account.infrastructure.controller.dto.MovementRequestDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Accounts", description = "Account operations")
 @RestController
 @RequestMapping("/movimientos")
 public class MovementController {

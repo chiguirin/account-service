@@ -3,11 +3,13 @@ package com.bank.account.infrastructure.controller;
 
 import com.bank.account.application.usecase.GenerateAccountStatementUseCase;
 import com.bank.account.infrastructure.controller.dto.AccountStatementResponseDTO;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Tag(name = "Accounts", description = "Account operations")
 @RestController
 @RequestMapping("/reporte")
 public class ReportController {
