@@ -1,6 +1,8 @@
 package com.bank.account.infrastructure.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public record CustomerStatusDTO(
-        String customerId,
+        @JsonProperty("id") String customerId,
         boolean active
 ) {}

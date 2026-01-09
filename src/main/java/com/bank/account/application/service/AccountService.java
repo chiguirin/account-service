@@ -1,6 +1,8 @@
 package com.bank.account.application.service;
 
 
+import com.bank.account.application.event.AccountCreatedEvent;
+import com.bank.account.application.event.AccountEventProducer;
 import com.bank.account.application.usecase.GetAccountByNumberUseCase;
 import com.bank.account.application.usecase.UpdateAccountStatusUseCase;
 import com.bank.account.domain.model.*;
@@ -22,6 +24,7 @@ import java.util.List;
 public class AccountService {
 
     private static final Logger log = LoggerFactory.getLogger(AccountService.class);
+    private final AccountEventProducer accountEventProducer;
 
     private final AccountRepository accountRepository;
     private final MovementRepository movementRepository;
@@ -31,12 +34,13 @@ public class AccountService {
 
     public AccountService(AccountRepository accountRepository,
                           MovementRepository movementRepository,
-                          CustomerClient customerClient, GetAccountByNumberUseCase getAccountByNumberUseCase, UpdateAccountStatusUseCase updateAccountStatusUseCase) {
+                          CustomerClient customerClient, GetAccountByNumberUseCase getAccountByNumberUseCase, UpdateAccountStatusUseCase updateAccountStatusUseCase, AccountEventProducer accountEventProducer) {
         this.accountRepository = accountRepository;
         this.movementRepository = movementRepository;
         this.customerClient = customerClient;
         this.getAccountByNumberUseCase = getAccountByNumberUseCase;
         this.updateAccountStatusUseCase = updateAccountStatusUseCase;
+        this.accountEventProducer = accountEventProducer;
     }
 
     // =========================
@@ -46,7 +50,7 @@ public class AccountService {
                               String customerId,
                               AccountType accountType,
                               BigDecimal initialBalance,
-                              boolean active){
+                              boolean active) {
 
         log.info("Starting account creation for customer {}", customerId);
 
@@ -72,6 +76,15 @@ public class AccountService {
         accountRepository.save(account);
 
         log.info("Account {} created for customer {}", accountNumber, customerId);
+
+        // Publish domain event after successful account creation
+        AccountCreatedEvent event = new AccountCreatedEvent(
+                accountNumber,
+                customerId,
+                LocalDateTime.now()
+        );
+
+        accountEventProducer.publish(event);
     }
 
     // =========================
