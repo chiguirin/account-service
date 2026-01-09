@@ -13,6 +13,9 @@ public class Account {
     @Column(name = "account_number", nullable = false, unique = true)
     private String accountNumber;
 
+    @Version
+    private Long version;
+
     @Column(name = "customer_id", nullable = false)
     private String customerId;
 
@@ -47,6 +50,10 @@ public class Account {
 
     public String getAccountNumber() {
         return accountNumber;
+    }
+
+    public Long getVersion() {
+        return version;
     }
 
     public String getCustomerId() {
